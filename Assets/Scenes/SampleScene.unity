@@ -384,6 +384,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce68a148655d0e017a117bfb470a9c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Board
+  tileprefab: {fileID: 3311777675899480613, guid: 302d7fda594a0a6e1a4de5e4029eac54, type: 3}
+  gridwidth: 8
+  gridheight: 8
+  tilecolors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0.29803926, g: 0.7726394, b: 0.8, a: 1}
+  - {r: 0.35055804, g: 0.9811321, b: 0.087931626, a: 1}
+  - {r: 0.7075472, g: 0.13683695, b: 0.6434676, a: 1}
+  - {r: 1, g: 0.9747957, b: 0, a: 1}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
