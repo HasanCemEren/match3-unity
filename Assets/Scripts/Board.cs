@@ -1,7 +1,7 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Board : MonoBehaviour
-{
+public class Board : MonoBehaviour {
     //Variables:
     [SerializeField] GameObject tileprefab;
     [SerializeField] int gridwidth = 8;
@@ -9,10 +9,18 @@ public class Board : MonoBehaviour
     [SerializeField] Color[] tilecolors;
 
     GameObject[][] grid;
+    Vector2 mouseposition;
+    Vector3 mouseworldposition;
+    float offsetx;
+    float offsety;
+    int row = 0;
+    int column = 0;
 
     //Functions:
-    void Start()
-    {
+    void Start() {
+        offsetx = (gridwidth - 1) / 2f;
+        offsety = (gridheight - 1) / 2f;
+
         //Create a jagged matrix
         grid = new GameObject[gridheight][];
         for(int row = 0; row < gridheight; ++row) {
@@ -21,9 +29,25 @@ public class Board : MonoBehaviour
         //Create the prefab grid
         for(int row = 0; row < gridheight; ++row) {
             for(int column = 0; column < gridwidth; ++column) {
-                grid[row][column] = Instantiate(tileprefab, new Vector3(column - ((gridheight -1) / 2f), row - ((gridwidth -1) / 2f), 0), Quaternion.identity, transform);
+                Vector3 tileposition = new Vector3(column - offsetx, row - offsety, 0) + transform.position;
+                grid[row][column] = Instantiate(tileprefab, tileposition, Quaternion.identity, transform);
                 grid[row][column].GetComponent<SpriteRenderer>().color = tilecolors[Random.Range(0, tilecolors.Length)];
             }
         }
-    } 
+    }
+
+    void Update() {
+        if(!Mouse.current.leftButton.wasPressedThisFrame) {
+            return;
+        }
+
+        mouseposition = Mouse.current.position.ReadValue();
+        mouseworldposition = Camera.main.ScreenToWorldPoint(new Vector3(mouseposition.x, mouseposition.y, 0.0f));
+        column = Mathf.RoundToInt(mouseworldposition.x - transform.position.x + offsetx);
+        row = Mathf.RoundToInt(mouseworldposition.y - transform.position.y + offsety);
+        if(column < 0 || column >= gridwidth || row < 0 || row >= gridheight) {
+            return;
+        }
+        Debug.Log("row " + row + " column " + column);
+    }
 }
