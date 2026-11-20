@@ -15,6 +15,8 @@ public class Board : MonoBehaviour {
     float offsety;
     int row = 0;
     int column = 0;
+    int selectedrow = -1;
+    int selectedcolumn = -1;
 
     //Functions:
     void Start() {
@@ -49,5 +51,12 @@ public class Board : MonoBehaviour {
             return;
         }
         Debug.Log("row " + row + " column " + column);
+
+        if (selectedrow > -1) {
+            grid[selectedrow][selectedcolumn].transform.localScale = Vector3.one;
+        }
+        grid[row][column].transform.localScale = new Vector3(0.8f, 0.8f, 0.0f);
+        selectedrow = row;
+        selectedcolumn = column;
     }
 }
